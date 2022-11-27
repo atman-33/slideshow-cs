@@ -1,0 +1,114 @@
+﻿<Window x:Class="SlideShow.WPF.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowStartupLocation="CenterScreen"
+        Title="{Binding Title}" Height="900" Width="1300" >
+
+    <Grid>
+
+        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+
+                <DockPanel MinWidth="220">
+                    <ToggleButton
+                        Margin="16"
+                        HorizontalAlignment="Right"
+                        DockPanel.Dock="Top"
+                        IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}"
+                        Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+
+                    <StackPanel Margin="16,4">
+                        <Button Name="Slideshow"
+                                Width="200"
+                                Height="50"
+                                Margin="0,4"
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{Binding SlideshowViewButton}"
+                                Cursor="Hand">
+                            <DockPanel Width="200">
+                                <materialDesign:PackIcon Kind="Slideshow" VerticalAlignment="Center" />
+                                <TextBlock Margin="10,0" Text="Slideshow" VerticalAlignment="Center" />
+                            </DockPanel>
+                        </Button>
+
+                        <Button Name="PageSetting"
+                                Width="200"
+                                Height="50"
+                                Margin="0,4"
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{Binding PageSettingViewButton}" 
+                                Cursor="Hand">
+                            <DockPanel Width="200">
+                                <materialDesign:PackIcon Kind="Picture" VerticalAlignment="Center" />
+                                <TextBlock Margin="10,0" Text="Page Setting" VerticalAlignment="Center" />
+                            </DockPanel>
+                        </Button>
+
+                        <Button Name="Settings"
+                                Width="200"
+                                Height="50"
+                                Margin="0,4"
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{Binding SettingsViewButton}" 
+                                Cursor="Hand">
+                            <DockPanel Width="200">
+                                <materialDesign:PackIcon Kind="Settings" VerticalAlignment="Center" />
+                                <TextBlock Margin="10,0" Text="Settings" VerticalAlignment="Center" />
+                            </DockPanel>
+                        </Button>
+
+                    </StackPanel>
+                </DockPanel>
+                
+            </materialDesign:DrawerHost.LeftDrawerContent>
+
+            <DockPanel LastChildFill="True">
+                <materialDesign:ColorZone DockPanel.Dock="Top"
+                                          Padding="16"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                          Mode="PrimaryDark">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Orientation="Horizontal">
+                            <Label Content="Slideshow App"
+                                   Foreground="White"
+                                   FontSize="14" VerticalAlignment="Center" 
+                                   VerticalContentAlignment="Center"/>
+                            <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" BorderBrush="Transparent">
+                                <ListBox>
+                                    <ListBoxItem Content="Hello World" />
+                                    <ListBoxItem Content="Nice Popup" />
+                                    <ListBoxItem Content="Goodbye" />
+                                </ListBox>
+                            </materialDesign:PopupBox>
+                        </StackPanel>
+
+                        <StackPanel>
+                            <DockPanel LastChildFill="True">
+                                <ToggleButton x:Name="MenuToggleButton"
+                                          AutomationProperties.Name="HamburgerToggleButton"
+                                          IsChecked="False"
+                                          Style="{DynamicResource MaterialDesignHamburgerToggleButton}" 
+                                          DockPanel.Dock="Left"/>
+
+                                <TextBlock Margin="16,0,0,0"
+                                       FontSize="24"
+                                       Text="{Binding ContentTitle}" 
+                                       VerticalAlignment="Center"
+                                       DockPanel.Dock="Right" 
+                                       HorizontalAlignment="Center"/>
+                            </DockPanel>
+                        </StackPanel>
+
+                    </DockPanel>
+                </materialDesign:ColorZone>
+                
+                <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+                
+            </DockPanel>
+        </materialDesign:DrawerHost>
+
+    </Grid>
+</Window>
