@@ -11,9 +11,8 @@ namespace Slideshow.WPF.Services
             //    ? new ValidationResult(false, "Field is required.")
             //    : ValidationResult.ValidResult;
 
-            return string.IsNullOrWhiteSpace((value ?? "").ToString())
-                ? new ValidationResult(false, "入力必須項目です")
-                : ValidationResult.ValidResult;
+            return string.IsNullOrWhiteSpace((value ?? "").ToString()) 
+                ? new ValidationResult(false, "入力必須項目です") : ValidationResult.ValidResult;
 
         }
     }
