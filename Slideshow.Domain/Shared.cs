@@ -22,5 +22,9 @@ namespace Slideshow.Domain
         /// </summary>
         public static string? DialogInitialDirectory { get; } = ConfigurationManager.AppSettings["DialogInitialDirectory"];
 
+        /// <summary>
+        /// 画像ファイルの拡張子
+        /// </summary>
+        public static string? ImageExtension { get; } = ConfigurationManager.AppSettings["ImageExtension"];
     }
 }

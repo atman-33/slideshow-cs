@@ -46,18 +46,32 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBox>
+
+                    <Button materialDesign:ButtonAssist.CornerRadius="20"
+                            Margin="30,5,5,5"
+                            Width="150"
+                            Height="40"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                            Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                            ToolTip="MaterialDesignRaisedDarkButton with Round Corners" 
+                            HorizontalContentAlignment="Center" 
+                            HorizontalAlignment="Left"
+                            Command="{Binding XXX}" Cursor="Hand">
+                        <TextBlock Text="選択ページを編集" />
+                    </Button>
+
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:Card>
                         <DataGrid Margin="5"
                                   Width="600"
-                                  Height="400"
+                                  Height="500"
                                   ItemsSource="{Binding PageMstRecords}"
                                   SelectedItem="{Binding PageMstRecordsSlectedItem}"
                                   VerticalAlignment="Top"
                                   AutoGenerateColumns="False"
-                                  IsReadOnly="True">
+                                  IsReadOnly="True" Cursor="Hand">
 
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectedCellsChanged">
@@ -110,27 +124,14 @@
 
                     <StackPanel Orientation="Vertical">
 
-                        <Button materialDesign:ButtonAssist.CornerRadius="20"
-                            Margin="16,0,10,0"
-                            Width="150"
-                            Height="40"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                            Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                            ToolTip="MaterialDesignRaisedDarkButton with Round Corners" 
-                            HorizontalContentAlignment="Center" 
-                            HorizontalAlignment="Left"
-                            Command="{Binding XXX}" Cursor="Hand">
-                            <TextBlock Text="選択ページを編集" />
-                        </Button>
-
-                        <GroupBox Margin="16"
+                        <GroupBox Margin="10,0,10,10"
                                   Header="{Binding ImageGroupBoxHeader}"
                                   Style="{StaticResource MaterialDesignCardGroupBox}">
                             <GroupBox.HeaderTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Width="32"
-                                                                  Height="32"
+                                                                  Height="24"
                                                                   VerticalAlignment="Center"
                                                                   Kind="ImageArea" />
                                         <TextBlock Margin="8,0,0,0"
@@ -140,11 +141,11 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </GroupBox.HeaderTemplate>
-                            <Image HorizontalAlignment="Left"
-                                   VerticalAlignment="Top"
+                            <Image HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
                                    Width="400"
                                    Height="300"
-                                   Source="{Binding xxx}" />
+                                   Source="{Binding ImageSource}" />
                         </GroupBox>
                     </StackPanel>
                 </StackPanel>

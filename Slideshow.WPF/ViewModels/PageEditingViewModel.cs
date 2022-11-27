@@ -12,6 +12,8 @@ using Slideshow.WPF.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using Template.Infrastruture;
 
@@ -25,6 +27,8 @@ namespace Slideshow.WPF.ViewModels
         //// 外部接触Repository
         private IPageMstRepository _pageMstRepository;
 
+        public IMediaService MediaService { get; private set; }
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -34,6 +38,11 @@ namespace Slideshow.WPF.ViewModels
             _messageService = new MessageService();
 
             //// DelegateCommandメソッドを登録
+            LoadedCommand = new DelegateCommand<IMediaService>(LoadedCommandExecute);
+
+            MoviePlayButton = new DelegateCommand(MoviePlayButtonExecute);
+            MovieStopButton = new DelegateCommand(MovieStopButtonExecute);
+
             SaveButton = new DelegateCommand(SaveButtonExecute);
             PreviewButton = new DelegateCommand(PreviewButtonExecute);
             OpenMovieFileButton = new DelegateCommand(OpenMovieFileButtonExecute);
@@ -104,6 +113,13 @@ namespace Slideshow.WPF.ViewModels
             set { SetProperty(ref _noteRecords, value); }
         }
 
+        private Uri _movieSource;
+        public Uri MovieSource
+        {
+            get { return _movieSource; }
+            set { SetProperty(ref _movieSource, value); }
+        }
+
         private BitmapImage _imageSource;
         public BitmapImage ImageSource
         {
@@ -111,9 +127,28 @@ namespace Slideshow.WPF.ViewModels
             set { SetProperty(ref _imageSource, value); }
         }
 
+
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
         //// 2. Event Binding (DelegateCommand)
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
+
+        public DelegateCommand<IMediaService> LoadedCommand { get; }
+        private void LoadedCommandExecute(IMediaService mediaService)
+        {
+            this.MediaService = mediaService;
+        }
+
+        public DelegateCommand MoviePlayButton { get; }
+        private void MoviePlayButtonExecute()
+        {
+            this.MediaService.Play();
+        }
+
+        public DelegateCommand MovieStopButton { get; }
+        private void MovieStopButtonExecute()
+        {
+            this.MediaService.Stop() ;
+        }
 
         public DelegateCommand OpenMovieFileButton { get; }
         private void OpenMovieFileButtonExecute()
@@ -132,6 +167,9 @@ namespace Slideshow.WPF.ViewModels
                 //// 選択されたファイル名 (ファイルパス) を取得
                 MovieLinkText = dialog.FileName;
             }
+
+            //// 動画プレビュー更新
+            PreviewMovie();
         }
 
         public DelegateCommand OpenImageFileButton { get; }
@@ -156,8 +194,8 @@ namespace Slideshow.WPF.ViewModels
             //// ページNoを設定
             ImagePageNoText = 1;
 
-            //// プレビュー更新
-            PreviewButtonExecute();
+            //// 画像プレビュー更新
+            PreviewImage();
         }
         public DelegateCommand ImagePageNoDownButton { get; }
         private void ImagePageNoDownButtonExecute()
@@ -169,43 +207,26 @@ namespace Slideshow.WPF.ViewModels
 
             ImagePageNoText = ImagePageNoText - 1;
 
-            //// プレビュー更新
-            PreviewButtonExecute();
+            //// 画像プレビュー更新
+            PreviewImage();
         }
         public DelegateCommand ImagePageNoUpButton { get; }
         private void ImagePageNoUpButtonExecute()
         {
             ImagePageNoText = ImagePageNoText + 1;
 
-            //// プレビュー更新
-            PreviewButtonExecute();
+            //// 画像プレビュー更新
+            PreviewImage();
         }
 
         public DelegateCommand PreviewButton { get; }
         private void PreviewButtonExecute()
         {
-            string filePath = ImageLinkText + "\\" + "スライド" + ImagePageNoText.ToString() + ".JPG";
-            Console.WriteLine("画像ファイル：" + filePath);
+            //// 動画プレビュー更新
+            PreviewMovie();
 
-            if (File.Exists(filePath) == false)
-            {
-                ImageSource = null;
-                return;
-            }
-
-            BitmapImage bmpImage = new BitmapImage();
-            using (FileStream stream = File.OpenRead(filePath))
-            {
-                bmpImage.BeginInit();
-                bmpImage.StreamSource = stream;
-                bmpImage.DecodePixelWidth = 500;
-                bmpImage.CacheOption = BitmapCacheOption.OnLoad;
-                bmpImage.CreateOptions = BitmapCreateOptions.None;
-                bmpImage.EndInit();
-                bmpImage.Freeze();
-            }
-
-            ImageSource = bmpImage;
+            //// 画像プレビュー更新
+            PreviewImage();
         }
 
         public DelegateCommand SaveButton { get; }
@@ -259,6 +280,43 @@ namespace Slideshow.WPF.ViewModels
         }
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+        }
+
+        private void PreviewMovie()
+        {
+            if (MovieLinkText == null)
+            {
+                return;
+            }
+
+            MovieSource = new Uri(MovieLinkText, UriKind.Relative);
+            this.MediaService.Play();
+        }
+
+        private void PreviewImage()
+        {
+            string filePath = ImageLinkText + "\\" + "スライド" + ImagePageNoText.ToString() + "." + Shared.ImageExtension;
+            Console.WriteLine("画像ファイル：" + filePath);
+
+            if (File.Exists(filePath) == false)
+            {
+                ImageSource = null;
+                return;
+            }
+
+            BitmapImage bmpImage = new BitmapImage();
+            using (FileStream stream = File.OpenRead(filePath))
+            {
+                bmpImage.BeginInit();
+                bmpImage.StreamSource = stream;
+                bmpImage.DecodePixelWidth = 500;
+                bmpImage.CacheOption = BitmapCacheOption.OnLoad;
+                bmpImage.CreateOptions = BitmapCreateOptions.None;
+                bmpImage.EndInit();
+                bmpImage.Freeze();
+            }
+
+            ImageSource = bmpImage;
         }
     }
 }

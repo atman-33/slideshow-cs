@@ -25,5 +25,7 @@ namespace Slideshow.WPF.ViewModels
         public string Note2 => _entity.Note2.Value;
         public string Note3 => _entity.Note3.Value;
 
+        public string ImageLink => _entity.ImageLink.Value;
+        public int? ImagePageNo => _entity.ImagePageNo.Value;
     }
 }

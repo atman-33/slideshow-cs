@@ -2,11 +2,15 @@
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
+using Slideshow.Domain;
 using Slideshow.Domain.Entities;
 using Slideshow.Domain.Repositories;
 using Slideshow.WPF.Views;
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Windows.Media.Imaging;
 using Template.Infrastruture;
 
 namespace Slideshow.WPF.ViewModels
@@ -90,10 +94,17 @@ namespace Slideshow.WPF.ViewModels
             set { SetProperty(ref _imageGroupBoxHeader, value); }
         }
 
+        private BitmapImage _imageSource;
+        public BitmapImage ImageSource
+        {
+            get { return _imageSource; }
+            set { SetProperty(ref _imageSource, value); }
+        }
+
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
         //// 2. Event Binding (DelegateCommand)
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
-        
+
         /// <summary>
         /// ページ編集画面を表示
         /// </summary>
@@ -145,6 +156,9 @@ namespace Slideshow.WPF.ViewModels
             }
 
             ImageGroupBoxHeader = "選択アイテムの画像（ID：" + PageMstRecordsSlectedItem.PageId.ToString() + "）";
+
+            //// 画像更新
+            PreviewImage();
         }
 
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
@@ -185,6 +199,32 @@ namespace Slideshow.WPF.ViewModels
                 collection.Add(entity);
             }
             return collection.Max(t => t.PageId.Value) + 1;
+        }
+
+        private void PreviewImage()
+        {
+            string filePath = PageMstRecordsSlectedItem.ImageLink + "\\" + "スライド" + PageMstRecordsSlectedItem.ImagePageNo.ToString() + "." + Shared.ImageExtension;
+            Console.WriteLine("画像ファイル：" + filePath);
+
+            if (File.Exists(filePath) == false)
+            {
+                ImageSource = null;
+                return;
+            }
+
+            BitmapImage bmpImage = new BitmapImage();
+            using (FileStream stream = File.OpenRead(filePath))
+            {
+                bmpImage.BeginInit();
+                bmpImage.StreamSource = stream;
+                bmpImage.DecodePixelWidth = 500;
+                bmpImage.CacheOption = BitmapCacheOption.OnLoad;
+                bmpImage.CreateOptions = BitmapCreateOptions.None;
+                bmpImage.EndInit();
+                bmpImage.Freeze();
+            }
+
+            ImageSource = bmpImage;
         }
     }
 }
