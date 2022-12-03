@@ -15,6 +15,11 @@ namespace SlideShow.WPF.ViewModels
             //// 画面遷移用（ナビゲーション）
             _regionManager = regionManager;
 
+            //// 初期画面
+            ContentTitle = "Slideshow";
+            _regionManager.RegisterViewWithRegion("ContentRegion", nameof(SlideshowView));
+
+
             //// DelegateCommandメソッドを登録
             SlideshowViewButton = new DelegateCommand(SlideshowViewButtonExecute);
             PageSettingViewButton = new DelegateCommand(PageSettingViewButtonExecute);
@@ -53,12 +58,12 @@ namespace SlideShow.WPF.ViewModels
 
         private void PageSettingViewButtonExecute()
         {
-            //// パラメータ渡し
-            var p = new NavigationParameters();
-            p.Add("MainWindowViewModelRegionManager", _regionManager);
+            //// パラメータ渡しのソース例
+            //var p = new NavigationParameters();
+            //p.Add("MainWindowViewModelRegionManager", _regionManager);
 
             ContentTitle = "Page Setting";
-            _regionManager.RequestNavigate("ContentRegion", nameof(PageSettingView), p);
+            _regionManager.RequestNavigate("ContentRegion", nameof(PageSettingView));
         }
 
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 

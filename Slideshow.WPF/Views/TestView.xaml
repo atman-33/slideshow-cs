@@ -20,7 +20,7 @@
                         HorizontalAlignment="Right"
                         DockPanel.Dock="Top"
                         IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}"
-                        Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+                        Style="{StaticResource MaterialDesignActionLightToggleButton}" Cursor="Hand" />
 
             <TextBox
                 x:Name="DemoItemsSearchBox"
@@ -40,7 +40,7 @@
                             Width="200"
                             Height="50"
                             Margin="0,4"
-                            Style="{StaticResource MaterialDesignFlatButton}">
+                            Style="{StaticResource MaterialDesignFlatButton}" Cursor="Hand">
                     <DockPanel Width="200">
                         <materialDesign:PackIcon Kind="Slideshow" VerticalAlignment="Center" />
                         <TextBlock Margin="10,0" Text="Slideshow" VerticalAlignment="Center" />

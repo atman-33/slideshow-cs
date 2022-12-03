@@ -29,10 +29,12 @@ namespace Slideshow.WPF.ViewModels
         /// </summary>
         private ObservableCollection<PageSettingViewModelPageMst> _pageMstRecordsOrigin;
 
-        public PageSettingViewModel(IDialogService dialogService)
+        public PageSettingViewModel(IDialogService dialogService, IRegionManager regionManager)
         {
-            //// 画面遷移用（ダイアログ）
+            //// 画面遷移用
+            _regionManager = regionManager;
             _dialogService = dialogService;
+
 
             //// DelegateCommandメソッドを登録
             PageEditingViewButton = new DelegateCommand(PageEditingViewButtonExecute);
@@ -177,8 +179,8 @@ namespace Slideshow.WPF.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            //// 遷移前の画面からパラメータ渡し
-            _regionManager = navigationContext.Parameters.GetValue<IRegionManager>("MainWindowViewModelRegionManager");
+            //// 遷移前の画面からパラメータ渡し　サンプル
+            //_regionManager = navigationContext.Parameters.GetValue<IRegionManager>("MainWindowViewModelRegionManager");
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)

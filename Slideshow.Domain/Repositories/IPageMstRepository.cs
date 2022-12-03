@@ -6,6 +6,6 @@ namespace Slideshow.Domain.Repositories
     {
         IReadOnlyList<PageMstEntity> GetData();
 
-        void Save(PageMstEntity enitity);
+        void Save(PageMstEntity entity);
     }
 }
