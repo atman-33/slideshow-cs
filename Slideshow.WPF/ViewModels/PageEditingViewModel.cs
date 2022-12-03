@@ -27,7 +27,9 @@ namespace Slideshow.WPF.ViewModels
         //// 外部接触Repository
         private IPageMstRepository _pageMstRepository;
 
-        public IMediaService MediaService { get; private set; }
+        //public IMediaService MediaService { get; private set; }
+
+        private MediaElement _movieMediaElement;
 
         /// <summary>
         /// コンストラクタ
@@ -38,8 +40,6 @@ namespace Slideshow.WPF.ViewModels
             _messageService = new MessageService();
 
             //// DelegateCommandメソッドを登録
-            LoadedCommand = new DelegateCommand<IMediaService>(LoadedCommandExecute);
-
             MoviePlayButton = new DelegateCommand(MoviePlayButtonExecute);
             MovieStopButton = new DelegateCommand(MovieStopButtonExecute);
 
@@ -58,6 +58,10 @@ namespace Slideshow.WPF.ViewModels
             {
                 NoteRecords.Add(new NoteEntity(String.Empty));
             }
+
+            //// 動画エレメントを設定
+            _movieMediaElement = new MediaElement();
+            MovieItemsControl.Add(_movieMediaElement);
         }
 
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
@@ -113,11 +117,11 @@ namespace Slideshow.WPF.ViewModels
             set { SetProperty(ref _noteRecords, value); }
         }
 
-        private Uri _movieSource;
-        public Uri MovieSource
+        private ObservableCollection<UIElement> _movieItemsControl = new ObservableCollection<UIElement>();
+        public ObservableCollection<UIElement> MovieItemsControl
         {
-            get { return _movieSource; }
-            set { SetProperty(ref _movieSource, value); }
+            get { return _movieItemsControl; }
+            set { SetProperty(ref _movieItemsControl, value); }
         }
 
         private BitmapImage _imageSource;
@@ -132,22 +136,20 @@ namespace Slideshow.WPF.ViewModels
         //// 2. Event Binding (DelegateCommand)
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
 
-        public DelegateCommand<IMediaService> LoadedCommand { get; }
-        private void LoadedCommandExecute(IMediaService mediaService)
-        {
-            this.MediaService = mediaService;
-        }
-
         public DelegateCommand MoviePlayButton { get; }
         private void MoviePlayButtonExecute()
         {
-            this.MediaService.Play();
+            _movieMediaElement.Position = TimeSpan.Zero;
+            _movieMediaElement.Visibility = System.Windows.Visibility.Visible;
+            _movieMediaElement.LoadedBehavior = MediaState.Manual;
+
+            _movieMediaElement.Play();
         }
 
         public DelegateCommand MovieStopButton { get; }
         private void MovieStopButtonExecute()
         {
-            this.MediaService.Stop() ;
+            _movieMediaElement.Stop() ;
         }
 
         public DelegateCommand OpenMovieFileButton { get; }
@@ -289,8 +291,12 @@ namespace Slideshow.WPF.ViewModels
                 return;
             }
 
-            MovieSource = new Uri(MovieLinkText, UriKind.Relative);
-            this.MediaService.Play();
+            _movieMediaElement.Source = new Uri(MovieLinkText, UriKind.Relative);
+            _movieMediaElement.Position = TimeSpan.Zero;
+            _movieMediaElement.Visibility = System.Windows.Visibility.Visible;
+            _movieMediaElement.LoadedBehavior = MediaState.Manual;
+
+            _movieMediaElement.Play();
         }
 
         private void PreviewImage()
