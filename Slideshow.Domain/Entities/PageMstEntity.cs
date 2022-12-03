@@ -1,5 +1,4 @@
 ﻿using Slideshow.Domain.ValueObjects;
-using Template.Domain.ValueObjects;
 
 namespace Slideshow.Domain.Entities
 {

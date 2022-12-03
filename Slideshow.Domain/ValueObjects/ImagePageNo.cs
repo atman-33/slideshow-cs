@@ -1,7 +1,7 @@
 ﻿
 using Slideshow.Domain.ValueObjects;
 
-namespace Template.Domain.ValueObjects
+namespace Slideshow.Domain.ValueObjects
 {
     public sealed class ImagePageNo : ValueObject<ImagePageNo>
     {
