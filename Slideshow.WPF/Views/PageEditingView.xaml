@@ -14,12 +14,6 @@
         <system:Double x:Key="IconSize">28</system:Double>
     </UserControl.Resources>
 
-    <!--<i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <prism:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=MediaService}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>-->
-
     <Grid>
         <DockPanel LastChildFill="True">
             <StackPanel DockPanel.Dock="Top"
