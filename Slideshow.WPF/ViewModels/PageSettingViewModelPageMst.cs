@@ -1,9 +1,4 @@
 ﻿using Slideshow.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Slideshow.WPF.ViewModels
 {
@@ -27,5 +22,7 @@ namespace Slideshow.WPF.ViewModels
 
         public string ImageLink => _entity.ImageLink.Value;
         public int? ImagePageNo => _entity.ImagePageNo.Value;
+
+        public PageMstEntity Entity { get { return _entity; } }
     }
 }
