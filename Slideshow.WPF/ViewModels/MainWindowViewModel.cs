@@ -16,9 +16,7 @@ namespace SlideShow.WPF.ViewModels
             _regionManager = regionManager;
 
             //// 初期画面
-            ContentTitle = "Slideshow";
-            _regionManager.RegisterViewWithRegion("ContentRegion", nameof(SlideshowView));
-
+            //_regionManager.RegisterViewWithRegion("ContentRegion", nameof(SlideshowView));
 
             //// DelegateCommandメソッドを登録
             SlideshowViewButton = new DelegateCommand(SlideshowViewButtonExecute);
@@ -36,11 +34,11 @@ namespace SlideShow.WPF.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
-        private string _contentTitle;
-        public string ContentTitle
+        private string _viewOutline;
+        public string ViewOutline
         {
-            get { return _contentTitle; }
-            set { SetProperty(ref _contentTitle, value); }
+            get { return _viewOutline; }
+            set { SetProperty(ref _viewOutline, value); }
         }
 
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
@@ -50,20 +48,22 @@ namespace SlideShow.WPF.ViewModels
 
         private void SlideshowViewButtonExecute()
         {
-            ContentTitle = "Slideshow";
-            _regionManager.RequestNavigate("ContentRegion", nameof(SlideshowView));
+            //// パラメータ渡し
+            var p = new NavigationParameters();
+            p.Add("MainWindow", this);
+
+            _regionManager.RequestNavigate("ContentRegion", nameof(SlideshowView), p);
         }
 
         public DelegateCommand PageSettingViewButton { get; }
 
         private void PageSettingViewButtonExecute()
         {
-            //// パラメータ渡しのソース例
-            //var p = new NavigationParameters();
-            //p.Add("MainWindowViewModelRegionManager", _regionManager);
+            //// パラメータ渡し
+            var p = new NavigationParameters();
+            p.Add("MainWindow", this);
 
-            ContentTitle = "Page Setting";
-            _regionManager.RequestNavigate("ContentRegion", nameof(PageSettingView));
+            _regionManager.RequestNavigate("ContentRegion", nameof(PageSettingView), p);
         }
 
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 

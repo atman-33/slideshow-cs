@@ -12,21 +12,24 @@
     </UserControl.Resources>
 
     <Grid>
-        <DockPanel LastChildFill="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
 
-            <StackPanel DockPanel.Dock="Top"
-                        Height="30"
-                        Background="LightGray">
-                <Label Content="PageSetting" 
-                       FontWeight="Bold" 
-                       Foreground="Gray"
-                       Height="30"
-                       VerticalAlignment="Center" 
-                       VerticalContentAlignment="Center"
-                       Padding="30,0,0,0"/>
-            </StackPanel>
-            <StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="40,10,10,10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="100"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Top"
+                        Margin="40,10,10,10">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
                     <Button IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                         Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryDarkButton}"
                         ToolTip="新規登録"
@@ -40,28 +43,33 @@
                         <TextBlock>☜ 新規登録はこちら</TextBlock>
                     </Label>
                 </StackPanel>
+            </StackPanel>
 
-                <Separator Height="1" Background="Gray" Margin="10,0,10,0"/>
+        </StackPanel>
 
-                <StackPanel Orientation="Vertical" Margin="30,5,5,5">
-                    <Label Content="登録済みのページを編集する場合は、下記から選択して編集して下さい。"
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="100"
+                    VerticalAlignment="Top">
+            <Separator/>
+
+            <Label Content="登録済みのページを編集する場合は、下記から選択して編集して下さい。"
                        Margin="5"/>
-
-                    <StackPanel Margin="5" Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Magnify" VerticalAlignment="Bottom" Margin="5"/>
-                        <TextBox VerticalAlignment="Center"
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Magnify" VerticalAlignment="Center" Margin="5"/>
+                <TextBox VerticalAlignment="Center"
+                         Margin="5,0,10,10"
+                         Width="300"
                              materialDesign:HintAssist.Hint="ページ名称を検索"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Left"
                              Text="{Binding PageNameSearchingText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                    <prism:InvokeCommandAction Command="{Binding PageNameSearchingTextChanged}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TextBox>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <prism:InvokeCommandAction Command="{Binding PageNameSearchingTextChanged}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
 
-                        <Button materialDesign:ButtonAssist.CornerRadius="20"
-                            Margin="30,5,5,5"
+                <Button materialDesign:ButtonAssist.CornerRadius="20"
+                            Margin="20"
                             Width="150"
                             Height="40"
                             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
@@ -70,100 +78,97 @@
                             HorizontalContentAlignment="Center" 
                             HorizontalAlignment="Left"
                             Command="{Binding XXX}" Cursor="Hand">
-                            <TextBlock Text="選択ページを編集" />
-                        </Button>
+                    <TextBlock Text="選択ページを編集" />
+                </Button>
 
-                    </StackPanel>
+            </StackPanel>
 
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:Card>
-                            <DataGrid Margin="5"
-                                  Width="600"
-                                  Height="500"
-                                  ItemsSource="{Binding PageMstRecords}"
-                                  SelectedItem="{Binding PageMstRecordsSlectedItem}"
-                                  VerticalAlignment="Top"
-                                  AutoGenerateColumns="False"
-                                  IsReadOnly="True" Cursor="Hand">
+        </StackPanel>
 
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectedCellsChanged">
-                                        <prism:InvokeCommandAction Command="{Binding PageMstRecordsSelectedCellsChanged}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
+        <StackPanel Grid.Row="2" Grid.Column="0"
+                    Margin="10">
+            <materialDesign:Card HorizontalAlignment="Left">
+                <DataGrid Width="600"
+                            Height="600"
+                            ItemsSource="{Binding PageMstRecords}"
+                            SelectedItem="{Binding PageMstRecordsSlectedItem}"
+                            VerticalAlignment="Top"
+                            AutoGenerateColumns="False"
+                            IsReadOnly="True" Cursor="Hand">
 
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="ページID"
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedCellsChanged">
+                            <prism:InvokeCommandAction Command="{Binding PageMstRecordsSelectedCellsChanged}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ページID"
                                                     Binding="{Binding PageId}">
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="ページ名称"
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="ページ名称"
                                                     Binding="{Binding PageName}">
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="停止時間&#10;[sec]"
-                                                    Binding="{Binding SlideWaitingTime}">
+                        </DataGridTextColumn>
+                        
+                        <!-- Memo:改行する際は「&#10;」を入力 -->
+                        <DataGridTextColumn Header="停止時間[sec]" Binding="{Binding SlideWaitingTime}">
+                        </DataGridTextColumn>
 
-                                    </DataGridTextColumn>
+                        <DataGridTemplateColumn Width="*">
+                            <DataGridTemplateColumn.Header>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="説明"/>
+                                </StackPanel>
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="50*"/>
+                                            <RowDefinition Height="1"/>
+                                            <RowDefinition Height="50*"/>
+                                            <RowDefinition Height="1"/>
+                                            <RowDefinition Height="50*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding Note1}" Padding="2"/>
+                                        <Border Grid.Row="1" BorderThickness="0,0,0,1" BorderBrush="Gray"/>
+                                        <TextBlock Grid.Row="2" Text="{Binding Note2}" Padding="2"/>
+                                        <Border Grid.Row="3" BorderThickness="0,0,0,1" BorderBrush="Gray"/>
+                                        <TextBlock Grid.Row="4" Text="{Binding Note3}" Padding="2"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </materialDesign:Card>
+        </StackPanel>
 
-                                    <DataGridTemplateColumn>
-                                        <DataGridTemplateColumn.Header>
-                                            <StackPanel Orientation="Vertical">
-                                                <TextBlock Text="説明1"/>
-                                                <TextBlock Text="説明2"/>
-                                                <TextBlock Text="説明3"/>
-                                            </StackPanel>
-                                        </DataGridTemplateColumn.Header>
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate >
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="50*"/>
-                                                        <RowDefinition Height="1"/>
-                                                        <RowDefinition Height="50*"/>
-                                                        <RowDefinition Height="1"/>
-                                                        <RowDefinition Height="50*"/>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" Text="{Binding Note1}" Padding="2"/>
-                                                    <Border Grid.Row="1" BorderThickness="0,0,0,1" BorderBrush="Gray"/>
-                                                    <TextBlock Grid.Row="2" Text="{Binding Note2}" Padding="2"/>
-                                                    <Border Grid.Row="3" BorderThickness="0,0,0,1" BorderBrush="Gray"/>
-                                                    <TextBlock Grid.Row="4" Text="{Binding Note3}" Padding="2"/>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </materialDesign:Card>
-
-                        <StackPanel Orientation="Vertical">
-
-                            <GroupBox Margin="10,0,10,10"
-                                  Header="{Binding ImageGroupBoxHeader}"
-                                  Style="{StaticResource MaterialDesignCardGroupBox}">
-                                <GroupBox.HeaderTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <materialDesign:PackIcon Width="32"
+        <StackPanel Grid.Row="2" Grid.Column="1" Margin="10">
+            <GroupBox Header="{Binding ImageGroupBoxHeader}"
+                      Style="{StaticResource MaterialDesignCardGroupBox}"
+                      Height="600">
+                <GroupBox.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Width="32"
                                                                   Height="24"
                                                                   VerticalAlignment="Center"
                                                                   Kind="ImageArea" />
-                                            <TextBlock Margin="8,0,0,0"
+                            <TextBlock Margin="8,0,0,0"
                                                       VerticalAlignment="Center"
                                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
                                                       Text="{Binding}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GroupBox.HeaderTemplate>
-                                <Image HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Width="400"
-                                   Height="300"
-                                   Source="{Binding ImageSource}" />
-                            </GroupBox>
                         </StackPanel>
-                    </StackPanel>
-                </StackPanel>
-            </StackPanel>
-        </DockPanel>
+                    </DataTemplate>
+                </GroupBox.HeaderTemplate>
+                <Image HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Width="600"
+                                   Height="600"
+                                   Source="{Binding ImageSource}" />
+            </GroupBox>
+        </StackPanel>
+
     </Grid>
 </UserControl>

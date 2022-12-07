@@ -26,5 +26,6 @@ namespace Slideshow.Domain
         /// 画像ファイルの拡張子
         /// </summary>
         public static string? ImageExtension { get; } = ConfigurationManager.AppSettings["ImageExtension"];
+
     }
 }

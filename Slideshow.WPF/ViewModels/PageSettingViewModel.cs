@@ -6,6 +6,7 @@ using Slideshow.Domain;
 using Slideshow.Domain.Entities;
 using Slideshow.Domain.Repositories;
 using Slideshow.WPF.Views;
+using SlideShow.WPF.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -17,6 +18,11 @@ namespace Slideshow.WPF.ViewModels
 {
     public class PageSettingViewModel : BindableBase, INavigationAware
     {
+        /// <summary>
+        /// MainWindow
+        /// </summary>
+        private MainWindowViewModel _mainWindowViewModel;
+
         //// 画面遷移
         private IRegionManager _regionManager;
         private IDialogService _dialogService; 
@@ -117,6 +123,7 @@ namespace Slideshow.WPF.ViewModels
             //// パラメータ渡し
             var p = new NavigationParameters();
             p.Add("PageId", GetNewPageId());
+            p.Add("MainWindow", _mainWindowViewModel);
 
             //// 画面遷移処理
             _regionManager.RequestNavigate("ContentRegion", nameof(PageEditingView), p);
@@ -179,8 +186,9 @@ namespace Slideshow.WPF.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            //// 遷移前の画面からパラメータ渡し　サンプル
-            //_regionManager = navigationContext.Parameters.GetValue<IRegionManager>("MainWindowViewModelRegionManager");
+            //// 遷移前の画面からパラメータ受け取り
+            _mainWindowViewModel = navigationContext.Parameters.GetValue<MainWindowViewModel>("MainWindow");
+            _mainWindowViewModel.ViewOutline = "> PageSetting";
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)

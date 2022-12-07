@@ -16,11 +16,17 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Template.Infrastruture;
+using SlideShow.WPF.ViewModels;
 
 namespace Slideshow.WPF.ViewModels
 {
     public class PageEditingViewModel : BindableBase, INavigationAware
     {
+        /// <summary>
+        /// MainWindow
+        /// </summary>
+        private MainWindowViewModel _mainWindowViewModel;
+
         //// メッセージボックス
         private IMessageService _messageService;
 
@@ -276,9 +282,11 @@ namespace Slideshow.WPF.ViewModels
         }
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            //// 遷移前の画面からパラメータ渡し
+            //// 遷移前の画面からパラメータ受け取り
             PageIdText = navigationContext.Parameters.GetValue<int>("PageId");
 
+            _mainWindowViewModel = navigationContext.Parameters.GetValue<MainWindowViewModel>("MainWindow");
+            _mainWindowViewModel.ViewOutline = "> PageSetting > PageEditing";
         }
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {

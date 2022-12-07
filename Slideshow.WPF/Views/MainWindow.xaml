@@ -113,8 +113,8 @@
 
             </materialDesign:DrawerHost>
 
-            <materialDesign:ColorZone DockPanel.Dock="Top" Background="LightGray" Height="30">
-                <Label Content="{Binding SubTitle}"
+            <materialDesign:ColorZone DockPanel.Dock="Top" Background="LightGray" Height="30" Margin="0,1,0,0">
+                <Label Content="{Binding ViewOutline}"
                        VerticalAlignment="Center"
                        Margin="10,0"/>
 
