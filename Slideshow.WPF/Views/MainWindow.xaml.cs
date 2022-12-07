@@ -10,6 +10,9 @@ namespace SlideShow.WPF.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            //// 初期からハンバーガーメニューを開いた状態
+            MenuToggleButton.IsChecked = true;
         }
     }
 }

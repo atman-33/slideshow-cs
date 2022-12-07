@@ -5,18 +5,67 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStartupLocation="CenterScreen"
-        Title="{Binding Title}" Height="900" Width="1300" >
+        WindowState="Maximized"
+        Height="600"
+        Width="900"
+        Title="{Binding Title}">
 
     <Grid>
         <DockPanel LastChildFill="True">
-            <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}" DockPanel.Dock="Left">
+            <materialDesign:ColorZone DockPanel.Dock="Top"
+                                          Padding="16"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                          Mode="PrimaryDark">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Orientation="Horizontal">
+
+                        <Label Content="ver 0.1"
+                                   Foreground="White"
+                                   FontSize="14" VerticalAlignment="Center" 
+                                   VerticalContentAlignment="Center" Cursor="Hand"/>
+
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Cursor="Hand">
+                            <materialDesign:PackIcon Kind="Home" 
+                                                             VerticalAlignment="Center"
+                                                             Foreground="White" Cursor="Hand"
+                                                             Width="30"
+                                                             Height="30"/>
+                        </Button>
+
+                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" BorderBrush="Transparent">
+                            <ListBox>
+                                <ListBoxItem Content="Hello World" />
+                                <ListBoxItem Content="Nice Popup" />
+                                <ListBoxItem Content="Goodbye" />
+                            </ListBox>
+                        </materialDesign:PopupBox>
+
+                    </StackPanel>
+
+                    <StackPanel>
+                        <DockPanel LastChildFill="True">
+                            <ToggleButton x:Name="MenuToggleButton"
+                                          AutomationProperties.Name="HamburgerToggleButton"
+                                          IsChecked="False"
+                                          Style="{DynamicResource MaterialDesignHamburgerToggleButton}" 
+                                          DockPanel.Dock="Left" Cursor="Hand"/>
+
+                            <TextBlock Margin="16,0,0,0"
+                                           FontSize="24"
+                                           Text="Slideshow App" 
+                                           VerticalAlignment="Center"
+                                           DockPanel.Dock="Right" 
+                                           HorizontalAlignment="Center" FontWeight="Bold"/>
+                        </DockPanel>
+                    </StackPanel>
+
+                </DockPanel>
+            </materialDesign:ColorZone>
+
+            <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}" 
+                                       DockPanel.Dock="Left">
                 <materialDesign:DrawerHost.LeftDrawerContent>
                     <StackPanel MinWidth="220" Cursor="Hand">
-                        <ToggleButton
-                        Margin="16"
-                        HorizontalAlignment="Right"
-                        IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}"
-                        Style="{StaticResource MaterialDesignActionLightToggleButton}" Cursor="Hand" />
 
                         <StackPanel Margin="16,4">
                             <Button Name="Slideshow"
@@ -64,50 +113,17 @@
 
             </materialDesign:DrawerHost>
 
-            <DockPanel LastChildFill="True">
-                <materialDesign:ColorZone DockPanel.Dock="Top"
-                                          Padding="16"
-                                          materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                                          Mode="PrimaryDark">
-                    <DockPanel>
-                        <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Orientation="Horizontal">
-                            <Label Content="Slideshow App"
-                                   Foreground="White"
-                                   FontSize="14" VerticalAlignment="Center" 
-                                   VerticalContentAlignment="Center"/>
-                            <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" BorderBrush="Transparent">
-                                <ListBox>
-                                    <ListBoxItem Content="Hello World" />
-                                    <ListBoxItem Content="Nice Popup" />
-                                    <ListBoxItem Content="Goodbye" />
-                                </ListBox>
-                            </materialDesign:PopupBox>
-                        </StackPanel>
+            <materialDesign:ColorZone DockPanel.Dock="Top" Background="LightGray" Height="30">
+                <Label Content="{Binding SubTitle}"
+                       VerticalAlignment="Center"
+                       Margin="10,0"/>
 
-                        <StackPanel>
-                            <DockPanel LastChildFill="True">
-                                <ToggleButton x:Name="MenuToggleButton"
-                                          AutomationProperties.Name="HamburgerToggleButton"
-                                          IsChecked="False"
-                                          Style="{DynamicResource MaterialDesignHamburgerToggleButton}" 
-                                          DockPanel.Dock="Left" Cursor="Hand"/>
+            </materialDesign:ColorZone>
 
-                                <TextBlock Margin="16,0,0,0"
-                                       FontSize="24"
-                                       Text="{Binding ContentTitle}" 
-                                       VerticalAlignment="Center"
-                                       DockPanel.Dock="Right" 
-                                       HorizontalAlignment="Center"/>
-                            </DockPanel>
-                        </StackPanel>
-
-                    </DockPanel>
-                </materialDesign:ColorZone>
-
+            <ScrollViewer HorizontalScrollBarVisibility="Auto">
                 <ContentControl prism:RegionManager.RegionName="ContentRegion" />
-
-            </DockPanel>
-
+            </ScrollViewer>
+            
         </DockPanel>
     </Grid>
 </Window>
