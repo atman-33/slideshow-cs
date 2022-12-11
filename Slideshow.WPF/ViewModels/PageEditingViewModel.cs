@@ -15,8 +15,8 @@ using System.IO;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using Template.Infrastruture;
 using SlideShow.WPF.ViewModels;
+using Slideshow.Infrastructure;
 
 namespace Slideshow.WPF.ViewModels
 {

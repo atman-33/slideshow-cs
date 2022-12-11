@@ -59,10 +59,12 @@ namespace SlideShow.WPF
             containerRegistry.RegisterForNavigation<SlideshowView>();
             containerRegistry.RegisterForNavigation<PageSettingView>();
             containerRegistry.RegisterForNavigation<PageEditingView>();
+            containerRegistry.RegisterForNavigation<SlidePatternSettingView>();
+            containerRegistry.RegisterForNavigation<SlidePatternEditingView>();
+            containerRegistry.RegisterForNavigation<OtherSettingsView>();
 
             //// ダイアログ画面（別画面に表示） ※ViewModel に IDialogAware 実装が必要
             //// ex. containerRegistry.RegisterDialog<XXXView, XXXViewModel>();
-
         }
     }
 }

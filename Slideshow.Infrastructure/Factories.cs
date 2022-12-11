@@ -1,9 +1,9 @@
 ﻿using Slideshow.Domain;
 using Slideshow.Domain.Repositories;
 using Slideshow.Infrastructure.Oracle;
-using Template.Infrastruture.SQLite;
+using Slideshow.Infrastructure.SQLite;
 
-namespace Template.Infrastruture
+namespace Slideshow.Infrastructure
 {
     /// <summary>
     /// Factories
@@ -12,7 +12,6 @@ namespace Template.Infrastruture
     {
         public static IPageMstRepository CreatePageMst()
         {
-            //// FakeはDEBUGのみ実装されるようリスク回避
 #if DEBUG
             if (Shared.IsFake)
             {
@@ -22,5 +21,39 @@ namespace Template.Infrastruture
 
             return new PageMstOracle();
         }
+        public static ISlidePatternMstRepository CreateSlidePatternMst()
+        {
+#if DEBUG
+            if (Shared.IsFake)
+            {
+                return new SlidePatternMstSQLite();
+            }
+#endif
+
+            return new SlidePatternMstOracle();
+        }
+        public static ISlidePatternPageMstRepository CreateSlidePatternPageMst()
+        {
+#if DEBUG
+            if (Shared.IsFake)
+            {
+                return new SlidePatternPageMstSQLite();
+            }
+#endif
+
+            return new SlidePatternPageMstOracle();
+        }
+        public static ISlidePatternNameSelectionMstRepository CreateSlidePatternNameSelectionMst()
+        {
+#if DEBUG
+            if (Shared.IsFake)
+            {
+                return new SlidePatternNameSelectionMstSQLite();
+            }
+#endif
+
+            return new SlidePatternNameSelectionMstOracle();
+        }
+
     }
 }

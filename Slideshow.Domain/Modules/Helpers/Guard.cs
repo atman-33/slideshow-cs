@@ -12,6 +12,14 @@ namespace Slideshow.Domain.Modules.Helpers
             }
         }
 
+        public static void IsNullOrEmpty(object o, string message)
+        {
+            if (o == null || Convert.ToString(o) == String.Empty)
+            {
+                throw new InputException(message);
+            }
+        }
+
         public static int IsInt(string text, string message)
         {
             int intValue;

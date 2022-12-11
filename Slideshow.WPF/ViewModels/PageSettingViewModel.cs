@@ -5,6 +5,7 @@ using Prism.Services.Dialogs;
 using Slideshow.Domain;
 using Slideshow.Domain.Entities;
 using Slideshow.Domain.Repositories;
+using Slideshow.Infrastructure;
 using Slideshow.WPF.Views;
 using SlideShow.WPF.ViewModels;
 using System;
@@ -12,7 +13,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Media.Imaging;
-using Template.Infrastruture;
 
 namespace Slideshow.WPF.ViewModels
 {

@@ -21,6 +21,7 @@ namespace SlideShow.WPF.ViewModels
             //// DelegateCommandメソッドを登録
             SlideshowViewButton = new DelegateCommand(SlideshowViewButtonExecute);
             PageSettingViewButton = new DelegateCommand(PageSettingViewButtonExecute);
+            OtherSettingsViewButton = new DelegateCommand(OtherSettingsViewButtonExecute);
         }
 
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
@@ -64,6 +65,17 @@ namespace SlideShow.WPF.ViewModels
             p.Add("MainWindow", this);
 
             _regionManager.RequestNavigate("ContentRegion", nameof(PageSettingView), p);
+        }
+
+        public DelegateCommand OtherSettingsViewButton { get; }
+
+        private void OtherSettingsViewButtonExecute()
+        {
+            //// パラメータ渡し
+            var p = new NavigationParameters();
+            p.Add("MainWindow", this);
+
+            _regionManager.RequestNavigate("ContentRegion", nameof(OtherSettingsView), p);
         }
 
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
