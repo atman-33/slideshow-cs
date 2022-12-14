@@ -1,3 +1,3 @@
 # 002_Slideshow
 
-スライドショーアプリ
+Slidesho app
