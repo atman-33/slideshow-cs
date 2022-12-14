@@ -22,8 +22,8 @@
                                  HorizontalAlignment="Left">
                 <DataGrid Width="400"
                             Height="600"
-                            ItemsSource="{Binding SlidePatternNameSelectionMstRecords}"
-                            SelectedItem="{Binding SlidePatternNameSelectionMstRecordsSlectedItem}"
+                            ItemsSource="{Binding SlidePatternNameSelectionMstEntities}"
+                            SelectedItem="{Binding SlidePatternNameSelectionMstEntitiesSlectedItem}"
                             VerticalAlignment="Top"
                           HorizontalAlignment="Left"
                             AutoGenerateColumns="False"
@@ -32,7 +32,7 @@
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedCellsChanged">
-                            <prism:InvokeCommandAction Command="{Binding SlidePatternNameSelectionMstRecordsSelectedCellsChanged}"/>
+                            <prism:InvokeCommandAction Command="{Binding SlidePatternNameSelectionMstEntitiesSelectedCellsChanged}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
 

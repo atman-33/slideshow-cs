@@ -34,7 +34,7 @@ namespace Slideshow.WPF.ViewModels
             _messageService = new MessageService();
 
             //// DelegateCommandメソッドを登録
-            SlidePatternNameSelectionMstRecordsSelectedCellsChanged = new DelegateCommand(SlidePatternNameSelectionMstRecordsSelectedCellsChangedExecute);
+            SlidePatternNameSelectionMstEntitiesSelectedCellsChanged = new DelegateCommand(SlidePatternNameSelectionMstEntitiesSelectedCellsChangedExecute);
             NewButton = new DelegateCommand(NewButtonExecute);
             SaveButton = new DelegateCommand(SaveButtonExecute);
             DeleteButton = new DelegateCommand(DeleteButtonExecute);
@@ -43,26 +43,26 @@ namespace Slideshow.WPF.ViewModels
             _slidePatternNameSelectionMstRepository = Factories.CreateSlidePatternNameSelectionMst();
 
             //// Repositoryからデータ取得
-            UpdateSlidePatternNameSelectionMstRecords();
+            UpdateSlidePatternNameSelectionMstEntities();
         }
 
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
         #region //// 1. Property Data Binding
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
 
-        private ObservableCollection<OtherSettingsViewModelSlidePatternNameSelectionMst> _slidePatternNameSelectionMstRecords
+        private ObservableCollection<OtherSettingsViewModelSlidePatternNameSelectionMst> _slidePatternNameSelectionMstEntities
             = new ObservableCollection<OtherSettingsViewModelSlidePatternNameSelectionMst>();
-        public ObservableCollection<OtherSettingsViewModelSlidePatternNameSelectionMst> SlidePatternNameSelectionMstRecords
+        public ObservableCollection<OtherSettingsViewModelSlidePatternNameSelectionMst> SlidePatternNameSelectionMstEntities
         {
-            get { return _slidePatternNameSelectionMstRecords; }
-            set { SetProperty(ref _slidePatternNameSelectionMstRecords, value); }
+            get { return _slidePatternNameSelectionMstEntities; }
+            set { SetProperty(ref _slidePatternNameSelectionMstEntities, value); }
         }
 
-        private OtherSettingsViewModelSlidePatternNameSelectionMst _slidePatternNameSelectionMstRecordsSlectedItem;
-        public OtherSettingsViewModelSlidePatternNameSelectionMst SlidePatternNameSelectionMstRecordsSlectedItem
+        private OtherSettingsViewModelSlidePatternNameSelectionMst _slidePatternNameSelectionMstEntitiesSlectedItem;
+        public OtherSettingsViewModelSlidePatternNameSelectionMst SlidePatternNameSelectionMstEntitiesSlectedItem
         {
-            get { return _slidePatternNameSelectionMstRecordsSlectedItem; }
-            set { SetProperty(ref _slidePatternNameSelectionMstRecordsSlectedItem, value); }
+            get { return _slidePatternNameSelectionMstEntitiesSlectedItem; }
+            set { SetProperty(ref _slidePatternNameSelectionMstEntitiesSlectedItem, value); }
         }
 
         private int _slidePatternExampleIdText;
@@ -93,16 +93,16 @@ namespace Slideshow.WPF.ViewModels
         #region //// 2. Event Binding (DelegateCommand)
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
 
-        public DelegateCommand SlidePatternNameSelectionMstRecordsSelectedCellsChanged { get; }
-        private void SlidePatternNameSelectionMstRecordsSelectedCellsChangedExecute()
+        public DelegateCommand SlidePatternNameSelectionMstEntitiesSelectedCellsChanged { get; }
+        private void SlidePatternNameSelectionMstEntitiesSelectedCellsChangedExecute()
         {
-            if (SlidePatternNameSelectionMstRecordsSlectedItem == null)
+            if (SlidePatternNameSelectionMstEntitiesSlectedItem == null)
             {
                 return;
             }
 
-            SlidePatternExampleIdText = SlidePatternNameSelectionMstRecordsSlectedItem.SlidePatternExampleId;
-            SlidePatternNameText = SlidePatternNameSelectionMstRecordsSlectedItem.SlidePatternNameExample;
+            SlidePatternExampleIdText = SlidePatternNameSelectionMstEntitiesSlectedItem.SlidePatternExampleId;
+            SlidePatternNameText = SlidePatternNameSelectionMstEntitiesSlectedItem.SlidePatternNameExample;
 
             IdIsEnabled = false;
         }
@@ -133,7 +133,7 @@ namespace Slideshow.WPF.ViewModels
             _slidePatternNameSelectionMstRepository.Save(entity);
             _messageService.ShowDialog("保存しました", "情報", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
 
-            UpdateSlidePatternNameSelectionMstRecords();
+            UpdateSlidePatternNameSelectionMstEntities();
         }
 
         public DelegateCommand DeleteButton { get; }
@@ -152,7 +152,7 @@ namespace Slideshow.WPF.ViewModels
             _slidePatternNameSelectionMstRepository.Delete(entity);
             _messageService.ShowDialog("削除しました", "情報", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         
-            UpdateSlidePatternNameSelectionMstRecords();
+            UpdateSlidePatternNameSelectionMstEntities();
         }
 
         #endregion
@@ -179,13 +179,13 @@ namespace Slideshow.WPF.ViewModels
 
         }
 
-        private void UpdateSlidePatternNameSelectionMstRecords()
+        private void UpdateSlidePatternNameSelectionMstEntities()
         {
-            SlidePatternNameSelectionMstRecords.Clear();
+            SlidePatternNameSelectionMstEntities.Clear();
 
             foreach (var entity in _slidePatternNameSelectionMstRepository.GetData())
             {
-                SlidePatternNameSelectionMstRecords.Add(new OtherSettingsViewModelSlidePatternNameSelectionMst(entity));
+                SlidePatternNameSelectionMstEntities.Add(new OtherSettingsViewModelSlidePatternNameSelectionMst(entity));
             }
         }
 

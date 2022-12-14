@@ -62,7 +62,7 @@ namespace Slideshow.WPF.ViewModels
             //// 新規の説明入力レコードを生成
             for (int i = 1; i <= 3; i++)
             {
-                NoteRecords.Add(new NoteEntity(String.Empty));
+                NoteEntities.Add(new NoteEntity(String.Empty));
             }
 
             //// 動画エレメントを設定
@@ -116,11 +116,11 @@ namespace Slideshow.WPF.ViewModels
             set { SetProperty(ref _slideWaitingTimeText, value); }
         }
 
-        private ObservableCollection<NoteEntity> _noteRecords = new ObservableCollection<NoteEntity>();
-        public ObservableCollection<NoteEntity> NoteRecords
+        private ObservableCollection<NoteEntity> _noteEntities = new ObservableCollection<NoteEntity>();
+        public ObservableCollection<NoteEntity> NoteEntities
         {
-            get { return _noteRecords; }
-            set { SetProperty(ref _noteRecords, value); }
+            get { return _noteEntities; }
+            set { SetProperty(ref _noteEntities, value); }
         }
 
         private ObservableCollection<UIElement> _movieItemsControl = new ObservableCollection<UIElement>();
@@ -256,9 +256,9 @@ namespace Slideshow.WPF.ViewModels
                 ImageLinkText,
                 ImagePageNoText,
                 (float)SlideWaitingTimeText,
-                NoteRecords[0].Note,
-                NoteRecords[1].Note,
-                NoteRecords[2].Note
+                NoteEntities[0].Note,
+                NoteEntities[1].Note,
+                NoteEntities[2].Note
                 );
 
             _pageMstRepository.Save(entity);

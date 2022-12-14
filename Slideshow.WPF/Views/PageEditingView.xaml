@@ -141,7 +141,7 @@
                            AllowsTransparency="True"
                            IsHitTestVisible="False"
                            Placement="RelativePoint"
-                           PlacementTarget="{Binding ElementName=NoteRecordsDataGrid}">
+                           PlacementTarget="{Binding ElementName=NoteEntitiesDataGrid}">
                 <!--  Popup construction Use properties of DraggedObject inside for Binding  -->
                 <TextBlock VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
@@ -157,8 +157,8 @@
             <Label Content="表を並び替えする場合は、☞マークをドラッグして下さい"
                            Margin="0,30,5,5"/>
 
-            <DataGrid Name="NoteRecordsDataGrid" 
-                                  ItemsSource="{Binding NoteRecords}"
+            <DataGrid Name="NoteEntitiesDataGrid" 
+                                  ItemsSource="{Binding NoteEntities}"
                                   AutoGenerateColumns="False"
                                   IsReadOnly="False"
                                   SelectionMode="Single"

@@ -31,9 +31,9 @@ namespace Slideshow.WPF.ViewModels
         private IPageMstRepository _pageMstRepository;
 
         /// <summary>
-        /// PageMstRecordsのオリジン（未フィルターのコレクション）
+        /// PageMstEntitiesのオリジン（未フィルターのコレクション）
         /// </summary>
-        private ObservableCollection<PageSettingViewModelPageMst> _pageMstRecordsOrigin;
+        private ObservableCollection<PageSettingViewModelPageMst> _pageMstEntitiesOrigin;
 
         public PageSettingViewModel(IDialogService dialogService, IRegionManager regionManager)
         {
@@ -45,7 +45,7 @@ namespace Slideshow.WPF.ViewModels
             //// DelegateCommandメソッドを登録
             PageEditingViewButton = new DelegateCommand(PageEditingViewButtonExecute);
             PageNameSearchingTextChanged = new DelegateCommand(PageNameSearchingTextChangedExecute);
-            PageMstRecordsSelectedCellsChanged = new DelegateCommand(PageMstRecordsSelectedCellsChangedExecute);
+            PageMstEntitiesSelectedCellsChanged = new DelegateCommand(PageMstEntitiesSelectedCellsChangedExecute);
 
             //// Factories経由で作成したRepositoryを、プライベート変数に格納
             _pageMstRepository = Factories.CreatePageMst();
@@ -53,9 +53,9 @@ namespace Slideshow.WPF.ViewModels
             //// Repositoryからデータ取得
             foreach (var entity in _pageMstRepository.GetData())
             {
-                PageMstRecords.Add(new PageSettingViewModelPageMst(entity));
+                PageMstEntities.Add(new PageSettingViewModelPageMst(entity));
             }
-            _pageMstRecordsOrigin = PageMstRecords; //// Originに格納
+            _pageMstEntitiesOrigin = PageMstEntities; //// Originに格納
         }
 
         //// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
@@ -65,21 +65,21 @@ namespace Slideshow.WPF.ViewModels
         /// <summary>
         /// 登録済みページ一覧を表示するDataGridのItemsSource
         /// </summary>
-        private ObservableCollection<PageSettingViewModelPageMst> _pageMstRecords = new ObservableCollection<PageSettingViewModelPageMst>();
-        public ObservableCollection<PageSettingViewModelPageMst> PageMstRecords
+        private ObservableCollection<PageSettingViewModelPageMst> _pageMstEntities = new ObservableCollection<PageSettingViewModelPageMst>();
+        public ObservableCollection<PageSettingViewModelPageMst> PageMstEntities
         {
-            get { return _pageMstRecords; }
-            set { SetProperty(ref _pageMstRecords, value); }
+            get { return _pageMstEntities; }
+            set { SetProperty(ref _pageMstEntities, value); }
         }
 
         /// <summary>
         /// 登録済みページ一覧の選択アイテム
         /// </summary>
-        private PageSettingViewModelPageMst _pageMstRecordsSlectedItem;
-        public PageSettingViewModelPageMst PageMstRecordsSlectedItem
+        private PageSettingViewModelPageMst _pageMstEntitiesSlectedItem;
+        public PageSettingViewModelPageMst PageMstEntitiesSlectedItem
         {
-            get { return _pageMstRecordsSlectedItem; }
-            set { SetProperty(ref _pageMstRecordsSlectedItem, value); }
+            get { return _pageMstEntitiesSlectedItem; }
+            set { SetProperty(ref _pageMstEntitiesSlectedItem, value); }
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Slideshow.WPF.ViewModels
                 return;
             }
 
-            var filterList = _pageMstRecordsOrigin.Where(x => x.PageName.Contains(PageNameSearchingText)).ToList();
+            var filterList = _pageMstEntitiesOrigin.Where(x => x.PageName.Contains(PageNameSearchingText)).ToList();
             var collection = new ObservableCollection<PageSettingViewModelPageMst>();
 
             foreach (var record in filterList)
@@ -149,22 +149,22 @@ namespace Slideshow.WPF.ViewModels
                 collection.Add(record);
             }
 
-            PageMstRecords = collection;
+            PageMstEntities = collection;
         }
 
         /// <summary>
         /// ページ一覧のDataGridの選択セルが変化した際の処理
         /// </summary>
-        public DelegateCommand PageMstRecordsSelectedCellsChanged { get; }
+        public DelegateCommand PageMstEntitiesSelectedCellsChanged { get; }
 
-        private void PageMstRecordsSelectedCellsChangedExecute()
+        private void PageMstEntitiesSelectedCellsChangedExecute()
         {
-            if (PageMstRecordsSlectedItem == null)
+            if (PageMstEntitiesSlectedItem == null)
             {
                 return;
             }
 
-            ImageGroupBoxHeader = "選択アイテムの画像（ID：" + PageMstRecordsSlectedItem.PageId.ToString() + "）";
+            ImageGroupBoxHeader = "選択アイテムの画像（ID：" + PageMstEntitiesSlectedItem.PageId.ToString() + "）";
 
             //// 画像更新
             PreviewImage();
@@ -213,7 +213,7 @@ namespace Slideshow.WPF.ViewModels
 
         private void PreviewImage()
         {
-            string filePath = PageMstRecordsSlectedItem.ImageLink + "\\" + "スライド" + PageMstRecordsSlectedItem.ImagePageNo.ToString() + "." + Shared.ImageExtension;
+            string filePath = PageMstEntitiesSlectedItem.ImageLink + "\\" + "スライド" + PageMstEntitiesSlectedItem.ImagePageNo.ToString() + "." + Shared.ImageExtension;
             Console.WriteLine("画像ファイル：" + filePath);
 
             if (File.Exists(filePath) == false)
