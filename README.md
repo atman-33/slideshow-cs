@@ -1,3 +1,3 @@
 # 002_Slideshow
 
-Slidesho app
+Slideshow app
