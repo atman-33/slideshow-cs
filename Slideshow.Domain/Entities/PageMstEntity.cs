@@ -4,7 +4,6 @@ namespace Slideshow.Domain.Entities
 {
     public sealed class PageMstEntity
     {
-
         public PageMstEntity(
             int pageId, 
             string pageName, 

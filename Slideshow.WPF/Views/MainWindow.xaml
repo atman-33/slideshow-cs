@@ -46,7 +46,7 @@
                         <DockPanel LastChildFill="True">
                             <ToggleButton x:Name="MenuToggleButton"
                                           AutomationProperties.Name="HamburgerToggleButton"
-                                          IsChecked="False"
+                                          IsChecked="True"
                                           Style="{DynamicResource MaterialDesignHamburgerToggleButton}" 
                                           DockPanel.Dock="Left" Cursor="Hand"/>
 
@@ -68,8 +68,7 @@
                     <StackPanel MinWidth="220" Cursor="Hand">
 
                         <StackPanel Margin="16,4">
-                            <Button Name="Slideshow"
-                                Width="200"
+                            <Button Width="200"
                                 Height="50"
                                 Margin="0,4"
                                 Style="{StaticResource MaterialDesignFlatButton}"
@@ -81,8 +80,7 @@
                                 </DockPanel>
                             </Button>
 
-                            <Button Name="PageSetting"
-                                Width="200"
+                            <Button Width="200"
                                 Height="50"
                                 Margin="0,4"
                                 Style="{StaticResource MaterialDesignFlatButton}"
@@ -94,18 +92,30 @@
                                 </DockPanel>
                             </Button>
 
-                            <Button Name="Settings"
-                                Width="200"
+                            <Button Width="200"
                                 Height="50"
                                 Margin="0,4"
                                 Style="{StaticResource MaterialDesignFlatButton}"
-                                Command="{Binding SettingsViewButton}" 
+                                Command="{Binding SlidePatternSettingViewButton}" 
+                                Cursor="Hand">
+                                <DockPanel Width="200">
+                                    <materialDesign:PackIcon Kind="Package" VerticalAlignment="Center" />
+                                    <TextBlock Margin="10,0" Text="Slide Pattern Setting" VerticalAlignment="Center" />
+                                </DockPanel>
+                            </Button>
+
+                            <Button Width="200"
+                                Height="50"
+                                Margin="0,4"
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{Binding OtherSettingsViewButton}" 
                                 Cursor="Hand">
                                 <DockPanel Width="200">
                                     <materialDesign:PackIcon Kind="Settings" VerticalAlignment="Center" />
-                                    <TextBlock Margin="10,0" Text="Settings" VerticalAlignment="Center" />
+                                    <TextBlock Margin="10,0" Text="Other Settings" VerticalAlignment="Center" />
                                 </DockPanel>
                             </Button>
+
 
                         </StackPanel>
                     </StackPanel>

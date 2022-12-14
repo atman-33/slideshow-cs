@@ -90,15 +90,15 @@
             <materialDesign:Card HorizontalAlignment="Left">
                 <DataGrid Width="600"
                             Height="600"
-                            ItemsSource="{Binding PageMstRecords}"
-                            SelectedItem="{Binding PageMstRecordsSlectedItem}"
+                            ItemsSource="{Binding PageMstEntities}"
+                            SelectedItem="{Binding PageMstEntitiesSlectedItem}"
                             VerticalAlignment="Top"
                             AutoGenerateColumns="False"
                             IsReadOnly="True" Cursor="Hand">
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedCellsChanged">
-                            <prism:InvokeCommandAction Command="{Binding PageMstRecordsSelectedCellsChanged}"/>
+                            <prism:InvokeCommandAction Command="{Binding PageMstEntitiesSelectedCellsChanged}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
 

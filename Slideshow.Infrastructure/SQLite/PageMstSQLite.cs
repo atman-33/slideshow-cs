@@ -3,7 +3,7 @@ using Slideshow.Domain.Repositories;
 using Slideshow.Domain.SQLite;
 using System.Data.SQLite;
 
-namespace Template.Infrastruture.SQLite
+namespace Slideshow.Infrastructure.SQLite
 {
     internal class PageMstSQLite : IPageMstRepository
     {
